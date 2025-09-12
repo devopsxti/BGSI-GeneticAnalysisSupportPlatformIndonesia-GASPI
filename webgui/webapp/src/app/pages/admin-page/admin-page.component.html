@@ -11,7 +11,13 @@
           mat-raised-button
           color="primary"
         >
-          <div class="text-lg">Create user</div>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="person-add"
+            fontIcon="person_add"
+          ></mat-icon>
+
+          Create user
         </button>
       </div>
     </div>
@@ -40,16 +46,16 @@
         form="filters"
         mat-raised-button
         color="primary"
-        style="width: 110px"
+        class="w-[110px]"
       >
         Filter
       </button>
     </form>
 
-    <table mat-table [dataSource]="usersTableDataSource">
+    <table mat-table [dataSource]="usersTableDataSource" matSort>
       @for (column of usersTableDisplayedColumns; track column) {
         <ng-container [matColumnDef]="column">
-          <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef>
+          <th class="whitespace-nowrap" mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ column }}
           </th>
           <td
@@ -71,7 +77,7 @@
     </table>
     <mat-paginator
       #paginator
-      [pageSizeOptions]="[10, 50]"
+      [pageSizeOptions]="[5, 10, 50]"
       [pageSize]="pageSize"
       length="9999"
     ></mat-paginator>

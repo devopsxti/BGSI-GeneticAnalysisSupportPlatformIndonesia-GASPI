@@ -8,13 +8,21 @@ export class AdminService {
   constructor() {}
 
   // TODO: Add quota
-  createUser(firstName: string, lastName: string, email: string) {
+  createUser(
+    firstName: string,
+    lastName: string,
+    email: string,
+    groups: any,
+    attributes: any,
+  ) {
     return from(
       API.post(environment.api_endpoint_sbeacon.name, 'admin/users', {
         body: {
           first_name: firstName,
           last_name: lastName,
           email,
+          groups,
+          attributes,
         },
       }),
     );
@@ -58,7 +66,17 @@ export class AdminService {
     );
   }
 
-  updateUsersGroups(email: string, groups: any) {
+  clearUserMfa(email: string) {
+    return from(
+      API.del(
+        environment.api_endpoint_sbeacon.name,
+        `admin/users/${email}/mfa`,
+        {},
+      ),
+    );
+  }
+
+  updateUsersGroups(email: string, groups: any, attributes: any) {
     return from(
       API.post(
         environment.api_endpoint_sbeacon.name,
@@ -66,6 +84,7 @@ export class AdminService {
         {
           body: {
             groups,
+            attributes,
           },
         },
       ),
